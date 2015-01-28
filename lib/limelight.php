@@ -1,6 +1,5 @@
 <?php
 include_once('config.php');
-error_reporting(-1);
 class LimelightOrder {
     public function new_prospect($data) {
         if (!empty($data)) {
@@ -140,8 +139,7 @@ class LimelightOrder {
                 'productId'=>$product_id,
                 'shippingId'=>$shipping_id,
                 'prospectId'=>$data['prospect_id'],
-                'upsellCount'=>0,
-                'product_name'=>'PreOps'
+                'upsellCount'=>0
             );
 
             if ($initial_upsell_product_id>0) {
@@ -151,7 +149,7 @@ class LimelightOrder {
                 }
             }
 
-            if ($data['same_info']!="on") {
+            if ($data['same_info']!="on" && $data['same_info']!="yes") {
                 $send_data = array_merge($send_data,array(
                     'billingFirstName'=>$data['billing_first_name'],
                     'billingLastName'=>$data['billing_last_name'],
@@ -225,12 +223,13 @@ class LimelightOrder {
                         $request_url = $url.'/admin/transact.php';
                         parse_str($this->curl($request_url,$send_data), $result);
 
-
                         if ($result['errorFound']==0) {
                             return array('status'=>1,'order_id'=>$order_id);
                         } else {
-                            return array('status'=>0,'message'=>'Post Ops order failed: '.$this->handle_error($result['responseCode']));
+                            return array('status'=>0,'message'=>'Second order failed: '.$this->handle_error($result['responseCode']));
                         }
+                    } else {
+                        return array('status'=>1,'order_id'=>$order_id);
                     }
                 } else {
                     return array('status'=>1,'order_id'=>$order_id);
