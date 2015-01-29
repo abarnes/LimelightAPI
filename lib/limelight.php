@@ -123,9 +123,12 @@ class LimelightOrder {
             global $prepaid_second_campaign_id;
             global $upsell_optional;
             global $allow_custom_products;
+            global $allow_custom_shipping;
 
             if ($allow_custom_products && isset($data['product_id'])) $product_id = $data['product_id'];
             if ($allow_custom_products && isset($data['second_product_id'])) $second_product_id = $data['second_product_id'];
+            if ($allow_custom_shipping && isset($data['shipping_id'])) $shipping_id = $data['shipping_id'];
+            if ($allow_custom_shipping && isset($data['second_shipping_id'])) $second_shipping_id = $data['second_shipping_id'];
 
             $send_data = array(
                 'method'=>'NewOrderWithProspect',
