@@ -146,7 +146,7 @@ class LimelightOrder {
             );
 
             if ($initial_upsell_product_id>0) {
-                if (!$upsell_optional || (isset($data['add-upsell']) && $data['add-upsell']==1)) {
+                if (!$upsell_optional || $upsell_optional=='second' || ($upsell_optional=='initial' && isset($data['add-upsell']) && $data['add-upsell']==1)) {
                     $send_data['upsellCount'] = 1;
                     $send_data['upsellProductIds'] = $initial_upsell_product_id;
                 }
@@ -193,10 +193,10 @@ class LimelightOrder {
                     $up = false;
                     if ($second_product_id==0) {
                         //must have upsell - convert upsell to main product
-                        if (!$upsell_optional || (isset($data['add-upsell']) && $data['add-upsell']==1)) {
+                        if (!$upsell_optional || $upsell_optional=='initial' || ($upsell_optional=='second' && isset($data['add-upsell']) && $data['add-upsell']==1)) {
                             $second_product_id = $second_upsell_product_id;
                         }
-                    } elseif (!$upsell_optional || (isset($data['add-upsell']) && $data['add-upsell']==1)) {
+                    } elseif (!$upsell_optional || $upsell_optional=='initial' || ($upsell_optional=='second' && isset($data['add-upsell']) && $data['add-upsell']==1)) {
                         $up = true;
                     }
 
