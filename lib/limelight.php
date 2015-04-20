@@ -227,15 +227,15 @@ class LimelightOrder {
                         parse_str($this->curl($request_url,$send_data), $result);
 
                         if ($result['errorFound']==0) {
-                            return array('status'=>1,'order_id'=>$order_id);
+                            return array('status'=>1,'order_id'=>$order_id,'customer_id'=>$result['customerId']);
                         } else {
                             return array('status'=>0,'message'=>'Second order failed: '.$this->handle_error($result['responseCode']));
                         }
                     } else {
-                        return array('status'=>1,'order_id'=>$order_id);
+                        return array('status'=>1,'order_id'=>$order_id,'customer_id'=>$result['customerId']);
                     }
                 } else {
-                    return array('status'=>1,'order_id'=>$order_id);
+                    return array('status'=>1,'order_id'=>$order_id,'customer_id'=>$result['customerId']);
                 }
             } else {
                 //temporary - record error message
